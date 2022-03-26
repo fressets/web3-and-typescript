@@ -1,9 +1,10 @@
-import Web3 from "web3";
+import Common from "@ethereumjs/common";
+import { Transaction } from "@ethereumjs/tx";
+import BN = require("bn.js");
+const quorumjs = require("quorum-js");
+
 async function main() {
   const Web3 = require("web3");
-  const Tx = require('ethereumjs-tx').Transaction;
-  const quorumjs = require("quorum-js");
-
   const web3 = new Web3(new Web3.providers.HttpProvider("http://18.220.17.201:22000"))
   quorumjs.extend(web3)
   const CONTRACT_ADDR = "0x0c5c0b03e897e7b1828f2bc923ea4498ec891060" // Wrapper contract on tmpnet
@@ -408,33 +409,38 @@ async function main() {
   //const gasPrice = await web3.eth.getGasPrice()
   //console.log(gasPrice)
   const PRIVATE_KEY = Buffer.from("341d5a3c0c5a69ff684d165fef262ed92953a81a7791771dd0a91faca841d4f2", "hex")
-  //const account = "0x231d51dbeC6E3E63Ad22078C73B70fBfD1b14265"
-  const account = "0x10458640ea5ba964ef4fc9300112020abea74d24"
-  console.log("aaaaa")
+  const account = "0x231d51dbeC6E3E63Ad22078C73B70fBfD1b14265"
   web3.eth.getTransactionCount(account).then(_nonce => {
-    console.log("bbbb")
     nonce = _nonce.toString(16);
-    console.log("Nonce: " + nonce);
+    console.log("Nonce: " + _nonce);
 
     const txParams = {
-      nonce: '0x' + nonce,
-      gasPrice: web3.utils.toHex(web3.utils.toWei('0', 'gwei')),
+      nonce: _nonce as number,
+      gasPrice: 0,
       gasLimit: web3.utils.toHex(300000),
-      value: web3.utils.toHex(web3.utils.toWei("0", "wei")),
-      from: account,
+      value: 0,
       to: CONTRACT_ADDR,
       data: code
     };
 
-    const tx = new Tx(txParams, {chain:104});
-//    const tx = new Tx(txParams);
-    tx.sign(PRIVATE_KEY);
+    const common = new Common({"chain":{
+        "name": "quorum",
+        "chainId": 104,
+        "networkId": 104,
+        "comment": "quorum private chain",
+        "url": "http://127.0.0.1/",
+        "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "hardforks": [],
+        "bootstrapNodes": []
+  }})
+    const tx = new Transaction(txParams, { common }).sign(PRIVATE_KEY);
     console.log("sign done.")
+    console.log(tx.toJSON())
+    console.log("Sender: " + tx.getSenderAddress())
 
     const serializedTx = tx.serialize();
 
     console.log("sendSignedTransaction: 0x" + serializedTx.toString('hex'))
-    console.log(tx.toJSON(true))
     web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', receipt => {
       console.log(receipt);
     })

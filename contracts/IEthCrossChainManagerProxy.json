@@ -1,0 +1,255 @@
+{
+  "contractName": "IEthCrossChainManagerProxy",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getEthCrossChainManager",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getEthCrossChainManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface of the EthCrossChainManagerProxy for business contract like LockProxy to obtain the reliable EthCrossChainManager contract hash.\",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/core/cross_chain_manager/interface/IEthCrossChainManagerProxy.sol\":\"IEthCrossChainManagerProxy\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/core/cross_chain_manager/interface/IEthCrossChainManagerProxy.sol\":{\"keccak256\":\"0xd0e1fe0ac1dd1c23ed1e59453c2f6abc0612278d14cbbdd6845c4275e692a748\",\"urls\":[\"bzz-raw://d5cee31bbd44d68b67fffd1b8f73e7ef52f664a3bc273d0539718d239dc30dd9\",\"dweb:/ipfs/QmV6XDrwfXjW3Na2fCUQkdCViTHsqy6BeEx3d61ruZqWGC\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.0;\n\n/**\n * @dev Interface of the EthCrossChainManagerProxy for business contract like LockProxy to obtain the reliable EthCrossChainManager contract hash.\n */\ninterface IEthCrossChainManagerProxy {\n    function getEthCrossChainManager() external view returns (address);\n}\n",
+  "sourcePath": "/Users/user/Desktop/hashport/eth-contracts/contracts/core/cross_chain_manager/interface/IEthCrossChainManagerProxy.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/core/cross_chain_manager/interface/IEthCrossChainManagerProxy.sol",
+    "exportedSymbols": {
+      "IEthCrossChainManagerProxy": [
+        999
+      ]
+    },
+    "id": 1000,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 993,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:11"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev Interface of the EthCrossChainManagerProxy for business contract like LockProxy to obtain the reliable EthCrossChainManager contract hash.",
+        "fullyImplemented": false,
+        "id": 999,
+        "linearizedBaseContracts": [
+          999
+        ],
+        "name": "IEthCrossChainManagerProxy",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 998,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getEthCrossChainManager",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 994,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "255:2:11"
+            },
+            "returnParameters": {
+              "id": 997,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 996,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 998,
+                  "src": "281:7:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 995,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "281:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "280:9:11"
+            },
+            "scope": 999,
+            "src": "223:67:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1000,
+        "src": "180:112:11"
+      }
+    ],
+    "src": "0:293:11"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/core/cross_chain_manager/interface/IEthCrossChainManagerProxy.sol",
+      "exportedSymbols": {
+        "IEthCrossChainManagerProxy": [
+          999
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".0"
+          ]
+        },
+        "id": 993,
+        "name": "PragmaDirective",
+        "src": "0:23:11"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": "@dev Interface of the EthCrossChainManagerProxy for business contract like LockProxy to obtain the reliable EthCrossChainManager contract hash.",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            999
+          ],
+          "name": "IEthCrossChainManagerProxy",
+          "scope": 1000
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getEthCrossChainManager",
+              "scope": 999,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 994,
+                "name": "ParameterList",
+                "src": "255:2:11"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 998,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 995,
+                        "name": "ElementaryTypeName",
+                        "src": "281:7:11"
+                      }
+                    ],
+                    "id": 996,
+                    "name": "VariableDeclaration",
+                    "src": "281:7:11"
+                  }
+                ],
+                "id": 997,
+                "name": "ParameterList",
+                "src": "280:9:11"
+              }
+            ],
+            "id": 998,
+            "name": "FunctionDefinition",
+            "src": "223:67:11"
+          }
+        ],
+        "id": 999,
+        "name": "ContractDefinition",
+        "src": "180:112:11"
+      }
+    ],
+    "id": 1000,
+    "name": "SourceUnit",
+    "src": "0:293:11"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-02-24T02:12:45.123Z",
+  "devdoc": {
+    "details": "Interface of the EthCrossChainManagerProxy for business contract like LockProxy to obtain the reliable EthCrossChainManager contract hash.",
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -434,11 +434,10 @@ async function main() {
                                                              ]
     const PRIVATE_KEY = Buffer.from("e9bac022a4a1f6d43810955750f896b7b0990eb24c49e338032e8003e37347a4", "hex")
     const account = "0x5b7fb1c0f7713e030c29b41551ea4574b9146fb7"
-    const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR, {from: account, gasLimit: 3000000});
+    const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
     // ont: ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk
     // neo: NSmjzJoqShD38aRu2m5zS3TMBXx4HMYUf3
     const bytes = "0x4a26aa47a9bbaf1367f9df5d6fc84b23230f445c"
-    console.log(bytes)
     // ropsten: 0x0000000000000000000000000000000000000000, ontChainId: 3, neo3ChainId: 88
     let method = contract.methods.lock("0x4214ad91B47846Eb8ECCb1BD213F0d1f5Ea44262", 1001, bytes, 1)
     let code = await method.encodeABI()

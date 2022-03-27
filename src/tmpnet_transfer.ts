@@ -3,7 +3,7 @@ import Common from 'ethereumjs-common';
 async function main() {
     const Web3 = require("web3");
     const Tx = require('ethereumjs-tx').Transaction;
-    const web3 = new Web3(new Web3.providers.HttpProvider("http://18.182.239.137:22003"))
+    const web3 = new Web3(new Web3.providers.HttpProvider("http://18.182.239.137:22000"))
     console.log("task start.")
     const CONTRACT_ADDR = "0x0c5c0b03e897e7b1828f2bc923ea4498ec891060" // Wrapper contract on tmpnet
 
@@ -400,7 +400,7 @@ async function main() {
     const bytes = "5B7fB1C0f7713e030C29B41551eA4574b9146fB7"
     console.log(bytes)
     // lock("ropstn chain hash", "(to)chain id", "(to)address", amount, fee, (from)side-chain_id)
-    let method = contract.methods.lock("0x0000000000000000000000000000000000000103", 2, "0x" + bytes, 300000000000000, 100000000000000, 1001)
+    let method = contract.methods.lock("0x0000000000000000000000000000000000000103", 2, "0x" + bytes, 300000000000000, 100000000000000, 0)
     let code = await method.encodeABI()
     console.log('code=' + code)
 

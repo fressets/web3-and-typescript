@@ -435,11 +435,10 @@ function main() {
                         }
                     ];
                     PRIVATE_KEY = Buffer.from("e9bac022a4a1f6d43810955750f896b7b0990eb24c49e338032e8003e37347a4", "hex");
-                    account = "0x5B7fB1C0f7713e030C29B41551eA4574b9146fB7";
+                    account = "0x5b7fb1c0f7713e030c29b41551ea4574b9146fb7";
                     contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
-                    bytes = "4a26aa47a9bbaf1367f9df5d6fc84b23230f445c" //tmpnet address
-                    ;
-                    method = contract.methods.lock("0x4214ad91b47846eb8eccb1bd213f0d1f5ea44262", 1001, "0x" + bytes, 1000000000000, 900000000000, 0);
+                    bytes = new Ont.Crypto.Address("ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk").serialize();
+                    method = contract.methods.lock("0x8Cad2301F7348DFc10C65778197028F432d51e76", 3, "0x" + bytes, 10000000, 10000000, 0);
                     return [4 /*yield*/, method.encodeABI()];
                 case 1:
                     code = _a.sent();
@@ -452,8 +451,8 @@ function main() {
                         var txParams = {
                             nonce: '0x' + nonce,
                             gasPrice: web3.utils.toHex(web3.utils.toWei('100', 'gwei')),
-                            gasLimit: web3.utils.toHex(300000),
-                            value: web3.utils.toHex(web3.utils.toWei("1000000000000", "wei")),
+                            gasLimit: web3.utils.toHex(1000000),
+                            value: web3.utils.toHex(web3.utils.toWei("0", "wei")),
                             from: account,
                             to: CONTRACT_ADDR,
                             data: code

@@ -5,7 +5,8 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "p2e": "npx tsc src/tmpnetToRopsten.ts --esModuleInterop true && node src/tmpnetToRopsten.js"
+    "p2e": "npx tsc src/tmpnetToRopsten.ts --esModuleInterop true && node src/tmpnetToRopsten.js",
+    "e2p": "npx tsc src/ropstenToTmpnet.ts --esModuleInterop true && node src/ropstenToTmpnet.js"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",

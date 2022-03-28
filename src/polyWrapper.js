@@ -438,7 +438,7 @@ function main() {
                     account = "0x5b7fb1c0f7713e030c29b41551ea4574b9146fb7";
                     contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
                     bytes = new Ont.Crypto.Address("ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk").serialize();
-                    method = contract.methods.lock("0x8Cad2301F7348DFc10C65778197028F432d51e76", 3, "0x" + bytes, 10000000, 10000000, 0);
+                    method = contract.methods.lock("0x0000000000000000000000000000000000000000", 3, "0x" + bytes, web3.utils.toWei("0.0001", "ether"), web3.utils.toWei("0.00001", "ether"), 0);
                     return [4 /*yield*/, method.encodeABI()];
                 case 1:
                     code = _a.sent();
@@ -452,7 +452,7 @@ function main() {
                             nonce: '0x' + nonce,
                             gasPrice: web3.utils.toHex(web3.utils.toWei('100', 'gwei')),
                             gasLimit: web3.utils.toHex(1000000),
-                            value: web3.utils.toHex(web3.utils.toWei("0", "wei")),
+                            value: web3.utils.toHex(web3.utils.toWei("0.0001", "ether")),
                             from: account,
                             to: CONTRACT_ADDR,
                             data: code

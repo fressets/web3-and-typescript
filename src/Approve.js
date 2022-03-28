@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var Web3, Tx, Ont, web3, CONTRACT_ADDR, ABI, PRIVATE_KEY, account, contract, method, code, nonce;
+        var Web3, Tx, Ont, web3, CONTRACT_ADDR, ABI, PRIVATE_KEY, account, contract, bytes, method, code, nonce;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -46,155 +46,84 @@ function main() {
                     Tx = require('ethereumjs-tx').Transaction;
                     Ont = require('ontology-ts-sdk');
                     web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/9986cb2f179c40ae8c5bf317ec2154ac"));
-                    CONTRACT_ADDR = "0xdc37471af6a8ab7f45f444c5a3ef4758281be32c" // Wrapper contract on Ropsten
+                    CONTRACT_ADDR = "0x4214ad91B47846Eb8ECCb1BD213F0d1f5Ea44262" // wePLT contract on Ropsten
                     ;
                     ABI = [
                         {
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "_owner",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "_chainId",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "constructor"
-                        },
-                        {
                             "anonymous": false,
                             "inputs": [
                                 {
                                     "indexed": true,
                                     "internalType": "address",
-                                    "name": "previousOwner",
+                                    "name": "owner",
                                     "type": "address"
                                 },
                                 {
                                     "indexed": true,
                                     "internalType": "address",
-                                    "name": "newOwner",
+                                    "name": "spender",
                                     "type": "address"
+                                },
+                                {
+                                    "indexed": false,
+                                    "internalType": "uint256",
+                                    "name": "value",
+                                    "type": "uint256"
                                 }
                             ],
-                            "name": "OwnershipTransferred",
+                            "name": "Approval",
                             "type": "event"
                         },
                         {
                             "anonymous": false,
                             "inputs": [
                                 {
+                                    "indexed": true,
+                                    "internalType": "address",
+                                    "name": "from",
+                                    "type": "address"
+                                },
+                                {
+                                    "indexed": true,
+                                    "internalType": "address",
+                                    "name": "to",
+                                    "type": "address"
+                                },
+                                {
                                     "indexed": false,
+                                    "internalType": "uint256",
+                                    "name": "value",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "name": "Transfer",
+                            "type": "event"
+                        },
+                        {
+                            "constant": true,
+                            "inputs": [],
+                            "name": "totalSupply",
+                            "outputs": [
+                                {
+                                    "internalType": "uint256",
+                                    "name": "",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "view",
+                            "type": "function"
+                        },
+                        {
+                            "constant": true,
+                            "inputs": [
+                                {
                                     "internalType": "address",
                                     "name": "account",
                                     "type": "address"
                                 }
                             ],
-                            "name": "Paused",
-                            "type": "event"
-                        },
-                        {
-                            "anonymous": false,
-                            "inputs": [
-                                {
-                                    "indexed": true,
-                                    "internalType": "address",
-                                    "name": "fromAsset",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": true,
-                                    "internalType": "address",
-                                    "name": "sender",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "uint64",
-                                    "name": "toChainId",
-                                    "type": "uint64"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "bytes",
-                                    "name": "toAddress",
-                                    "type": "bytes"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "uint256",
-                                    "name": "net",
-                                    "type": "uint256"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "uint256",
-                                    "name": "fee",
-                                    "type": "uint256"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "PolyWrapperLock",
-                            "type": "event"
-                        },
-                        {
-                            "anonymous": false,
-                            "inputs": [
-                                {
-                                    "indexed": true,
-                                    "internalType": "address",
-                                    "name": "fromAsset",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": true,
-                                    "internalType": "bytes",
-                                    "name": "txHash",
-                                    "type": "bytes"
-                                },
-                                {
-                                    "indexed": true,
-                                    "internalType": "address",
-                                    "name": "sender",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": false,
-                                    "internalType": "uint256",
-                                    "name": "efee",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "PolyWrapperSpeedUp",
-                            "type": "event"
-                        },
-                        {
-                            "anonymous": false,
-                            "inputs": [
-                                {
-                                    "indexed": false,
-                                    "internalType": "address",
-                                    "name": "account",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "Unpaused",
-                            "type": "event"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "chainId",
+                            "name": "balanceOf",
                             "outputs": [
                                 {
                                     "internalType": "uint256",
@@ -207,205 +136,55 @@ function main() {
                             "type": "function"
                         },
                         {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "feeCollector",
-                            "outputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "",
-                                    "type": "address"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "isOwner",
-                            "outputs": [
-                                {
-                                    "internalType": "bool",
-                                    "name": "",
-                                    "type": "bool"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "lockProxy",
-                            "outputs": [
-                                {
-                                    "internalType": "contract ILockProxy",
-                                    "name": "",
-                                    "type": "address"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "owner",
-                            "outputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "",
-                                    "type": "address"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "paused",
-                            "outputs": [
-                                {
-                                    "internalType": "bool",
-                                    "name": "",
-                                    "type": "bool"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "renounceOwnership",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
                             "constant": false,
                             "inputs": [
                                 {
                                     "internalType": "address",
-                                    "name": "newOwner",
+                                    "name": "recipient",
                                     "type": "address"
-                                }
-                            ],
-                            "name": "transferOwnership",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "collector",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "setFeeCollector",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "_lockProxy",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "setLockProxy",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "pause",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "unpause",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "token",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "extractFee",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "fromAsset",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint64",
-                                    "name": "toChainId",
-                                    "type": "uint64"
-                                },
-                                {
-                                    "internalType": "bytes",
-                                    "name": "toAddress",
-                                    "type": "bytes"
                                 },
                                 {
                                     "internalType": "uint256",
                                     "name": "amount",
                                     "type": "uint256"
+                                }
+                            ],
+                            "name": "transfer",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": true,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "owner",
+                                    "type": "address"
                                 },
                                 {
-                                    "internalType": "uint256",
-                                    "name": "fee",
-                                    "type": "uint256"
-                                },
+                                    "internalType": "address",
+                                    "name": "spender",
+                                    "type": "address"
+                                }
+                            ],
+                            "name": "allowance",
+                            "outputs": [
                                 {
                                     "internalType": "uint256",
-                                    "name": "id",
+                                    "name": "",
                                     "type": "uint256"
                                 }
                             ],
-                            "name": "lock",
-                            "outputs": [],
-                            "payable": true,
-                            "stateMutability": "payable",
+                            "payable": false,
+                            "stateMutability": "view",
                             "type": "function"
                         },
                         {
@@ -413,31 +192,116 @@ function main() {
                             "inputs": [
                                 {
                                     "internalType": "address",
-                                    "name": "fromAsset",
+                                    "name": "spender",
                                     "type": "address"
                                 },
                                 {
-                                    "internalType": "bytes",
-                                    "name": "txHash",
-                                    "type": "bytes"
-                                },
-                                {
                                     "internalType": "uint256",
-                                    "name": "fee",
+                                    "name": "amount",
                                     "type": "uint256"
                                 }
                             ],
-                            "name": "speedUp",
-                            "outputs": [],
-                            "payable": true,
-                            "stateMutability": "payable",
+                            "name": "approve",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "sender",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "address",
+                                    "name": "recipient",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "amount",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "name": "transferFrom",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "spender",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "addedValue",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "name": "increaseAllowance",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "spender",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "subtractedValue",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "name": "decreaseAllowance",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
                             "type": "function"
                         }
                     ];
                     PRIVATE_KEY = Buffer.from("e9bac022a4a1f6d43810955750f896b7b0990eb24c49e338032e8003e37347a4", "hex");
                     account = "0x5b7fb1c0f7713e030c29b41551ea4574b9146fb7";
                     contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
-                    method = contract.methods.lock("0x4214ad91b47846eb8eccb1bd213f0d1f5ea44262", 1001, account, web3.utils.toWei("0.000001", "ether"), 0, 0);
+                    bytes = "0xdc37471af6a8ab7f45f444c5a3ef4758281be32c";
+                    method = contract.methods.approve(bytes, web3.utils.toWei("0.00001", "ether"));
                     return [4 /*yield*/, method.encodeABI()];
                 case 1:
                     code = _a.sent();

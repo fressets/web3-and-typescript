@@ -397,11 +397,11 @@ async function main() {
     const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR)
     // ont: ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk
     // tmpnet: 0x5b7fb1c0f7713e030c29b41551ea4574b9146fb7
-    const bytes = new Ont.Crypto.Address("ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk").serialize()
+    //const bytes = new Ont.Crypto.Address("ASQa8m9nDuNB4HYbbTt5rN294taNykMhRk").serialize()
     // lock("ropstn chain hash", "(to)chain id", "(to)address", amount, fee, (from)side-chain_id)
     // wePLT contract address = 0x4214ad91b47846eb8eccb1bd213f0d1f5ea44262
-    //let method = contract.methods.lock("0x4214ad91b47846eb8eccb1bd213f0d1f5ea44262", 1001, "0x" + bytes, 1, 0, 0)
-    let method = contract.methods.lock("0x0000000000000000000000000000000000000000", 3, "0x" + bytes, web3.utils.toWei("0.0001", "ether"), web3.utils.toWei("0.00001", "ether"), 0)
+    let method = contract.methods.lock("0x4214ad91b47846eb8eccb1bd213f0d1f5ea44262", 1001, account, web3.utils.toWei("0.000001", "ether"), 0, 0)
+    //let method = contract.methods.lock("0x0000000000000000000000000000000000000000", 3, "0x" + bytes, web3.utils.toWei("0.0001", "ether"), web3.utils.toWei("0.00001", "ether"), 0)
     let code = await method.encodeABI()
     console.log('code=' + code)
 
@@ -416,7 +416,7 @@ async function main() {
     			nonce: '0x' + nonce,
     			gasPrice: web3.utils.toHex(web3.utils.toWei('100', 'gwei')),
     			gasLimit: web3.utils.toHex(1000000),
-    			value: web3.utils.toHex(web3.utils.toWei("0.0001", "ether")),
+    			value: web3.utils.toHex(web3.utils.toWei("0", "ether")),
     			from: account,
     			to: CONTRACT_ADDR,
     			data: code

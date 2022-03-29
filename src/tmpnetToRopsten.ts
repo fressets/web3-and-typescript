@@ -431,12 +431,12 @@ async function main() {
   const chainId = 2
   const fromAccount = "0x231d51dbeC6E3E63Ad22078C73B70fBfD1b14265"
   const toAddress = "231d51dbeC6E3E63Ad22078C73B70fBfD1b14265" //ropsten address
-  const amount = web3.utils.toWei('0.1', 'ether')
-  const amount2 = web3.utils.toWei('0.0001', 'ether')
-  const fee = web3.utils.toWei('0.012', 'ether')
+  const approve_amount = web3.utils.toWei('0.001', 'ether')
+  const amount2 = web3.utils.toWei('0.0008', 'ether')
+  const fee = web3.utils.toWei('0.0005', 'ether')
   //let method = contract.methods.lock(currencyContract, chainId, "0x" + toAddress, amount, fee, 0)
 
-  let approveCode = await nativeContract.methods.approve(WRAPPER_CONTRACT_ADDR, amount).encodeABI()
+  let approveCode = await nativeContract.methods.approve(WRAPPER_CONTRACT_ADDR, approve_amount).encodeABI()
 
   let lockCode = await wrapperContract.methods.lock(nativeContractAddress, chainId, "0x" + toAddress, amount2, fee, 0).encodeABI()
   console.log('lockCode=' + lockCode)
@@ -465,6 +465,7 @@ async function main() {
       nonce: _nonce as number,
       gasPrice: 0, // 0がmust
       gasLimit: 0,
+      from: fromAccount,
       value: 0, // PLTはchain通貨がないので0
       to: nativeContractAddress,
       data: approveCode
@@ -488,6 +489,7 @@ async function main() {
           nonce: _nonce as number,
           gasPrice: 0, // 0がmust
           gasLimit: 0,
+          from: fromAccount,
           value: 0, // PLTはchain通貨がないので0
           to: WRAPPER_CONTRACT_ADDR,
           data: lockCode

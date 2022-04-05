@@ -431,9 +431,9 @@ async function main() {
   const chainId = 2
   const fromAccount = "0x231d51dbeC6E3E63Ad22078C73B70fBfD1b14265"
   const toAddress = "231d51dbeC6E3E63Ad22078C73B70fBfD1b14265" //ropsten address
-  const approve_amount = web3.utils.toWei('0.001', 'ether')
-  const amount2 = web3.utils.toWei('0.0008', 'ether')
-  const fee = web3.utils.toWei('0.0005', 'ether')
+  const approve_amount = web3.utils.toWei('2.01', 'ether')
+  const amount2 = web3.utils.toWei('1.01', 'ether')
+  const fee = web3.utils.toWei('0.01', 'ether')
   //let method = contract.methods.lock(currencyContract, chainId, "0x" + toAddress, amount, fee, 0)
 
   let approveCode = await nativeContract.methods.approve(WRAPPER_CONTRACT_ADDR, approve_amount).encodeABI()

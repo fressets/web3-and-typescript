@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,21 +34,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
-// [1972945,"0x47ffe7e5d3b5ae9756cb0f297cb374c3d285eee2f1e46399e70ff40b74b8abcf",3,"0x0000000000000000000000000000000000000103","0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8","0x1612bdb131445f48d1ad0ec522a7a3be5d77d8a5","0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4","5000000000000000000",0,false]
-// [1972973,"0x11db135bd80cf25f6fabba19f4b495f35a42da6c664ce14c4bd61517d43c0e46",1,"0x0000000000000000000000000000000000000103","0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8","0x1612bdb131445f48d1ad0ec522a7a3be5d77d8a5","0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4","5000000000000000000",0,false]
-function main() {
+function getReason(txHash) {
     return __awaiter(this, void 0, void 0, function () {
-        var Web3, web3;
+        var getRevertReason, Web3, web3, tx, res;
         return __generator(this, function (_a) {
-            Web3 = require("web3");
-            web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
-            // web3.eth.getTransaction("0x4d9c3d0fd1a2e5897754352ec446c284045faa558b366e7992bfa617406766f3").then(console.log)
-            // web3.eth.getTransaction("0x962945260a0a293b9c8dab23d17a0ea95a7f691fdf56133fcea27e1cf54b7ca7").then(console.log)
-            web3.eth.getTransactionReceipt("0x4d9c3d0fd1a2e5897754352ec446c284045faa558b366e7992bfa617406766f3").then(console.log);
-            web3.eth.getTransactionReceipt("0x962945260a0a293b9c8dab23d17a0ea95a7f691fdf56133fcea27e1cf54b7ca7").then(console.log);
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    getRevertReason = require('eth-revert-reason');
+                    Web3 = require("web3");
+                    web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
+                    return [4 /*yield*/, web3.eth.getTransaction(txHash)];
+                case 1:
+                    tx = _a.sent();
+                    return [4 /*yield*/, getRevertReason(txHash, "mainnet", undefined, web3)];
+                case 2:
+                    res = _a.sent();
+                    console.log(JSON.stringify(res));
+                    return [2 /*return*/];
+            }
         });
     });
 }
-main();
+getReason("0x581180a0f5b9adfb065d45daa5e5c8621cd288a056064a19e341473e0dd29c2f");

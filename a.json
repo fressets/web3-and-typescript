@@ -1,0 +1,10 @@
+
+> account
+> npx tsc src/account.ts --esModuleInterop true && node src/account.js
+
+9000000000000000000
+n: 3
+Nonce: 3
+{"blockNumber":1972945,"transactionHash":"0x47ffe7e5d3b5ae9756cb0f297cb374c3d285eee2f1e46399e70ff40b74b8abcf","transactionIndex":3,"address":"0x0000000000000000000000000000000000000103","eventSig":"0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8","source":"0x1612bdb131445f48d1ad0ec522a7a3be5d77d8a5","destination":"0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4","amount":"5000000000000000000","logIndex":0,"removed":false}
+{"blockNumber":1972973,"transactionHash":"0x11db135bd80cf25f6fabba19f4b495f35a42da6c664ce14c4bd61517d43c0e46","transactionIndex":1,"address":"0x0000000000000000000000000000000000000103","eventSig":"0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8","source":"0x1612bdb131445f48d1ad0ec522a7a3be5d77d8a5","destination":"0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4","amount":"5000000000000000000","logIndex":0,"removed":false}
+{"blockNumber":1973970,"transactionHash":"0xde453f3ebf3bc806e18aabac6fc8d684b6adf0bc527eb7e4f0011455e6e1f67a","transactionIndex":2,"address":"0x0000000000000000000000000000000000000103","eventSig":"0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8","source":"0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4","destination":"0x1612bdb131445f48d1ad0ec522a7a3be5d77d8a5","amount":"1000000000000000000","logIndex":0,"removed":false}

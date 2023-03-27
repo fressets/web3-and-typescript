@@ -5,12 +5,21 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "p2sepolia": "npx tsc src/tmpnetToSepolia.ts --esModuleInterop true && node src/tmpnetToSepolia.js",
+    "account": "npx tsc src/account.ts --esModuleInterop true && node src/account.js",
+    "getTx": "npx tsc src/getTx.ts --esModuleInterop true && node src/getTx.js",
+    "decodeInput": "npx tsc src/decodeInput.ts --esModuleInterop true && node src/decodeInput.js",
+    "pltApprove": "npx tsc src/pltApprove.ts --esModuleInterop true && node src/pltApprove.js",
+    "pltLock": "npx tsc src/pltLock.ts --esModuleInterop true && node src/pltLock.js",
+    "getRevertMessage": "npx tsc src/getRevertMessage.ts --esModuleInterop true && node src/getRevertMessage.js",
+    "a": "npx tsc src/a.ts --esModuleInterop true && node src/a.js",
     "p2e": "npx tsc src/tmpnetToRopsten.ts --esModuleInterop true && node src/tmpnetToRopsten.js",
     "e2p": "npx tsc src/ropstenToTmpnet.ts --esModuleInterop true && node src/ropstenToTmpnet.js"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",
     "@ethereumjs/tx": "^3.5.1",
+    "eth-revert-reason": "^1.0.3",
     "keythereum": "^1.2.0",
     "quorum-js": "^0.3.6",
     "typescript": "^4.6.3",

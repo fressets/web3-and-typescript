@@ -12,6 +12,10 @@
     "pltApprove": "npx tsc src/pltApprove.ts --esModuleInterop true && node src/pltApprove.js",
     "pltLock": "npx tsc src/pltLock.ts --esModuleInterop true && node src/pltLock.js",
     "getRevertMessage": "npx tsc src/getRevertMessage.ts --esModuleInterop true && node src/getRevertMessage.js",
+    "getBlock": "npx tsc src/getBlock.ts --esModuleInterop true && node src/getBlock.js",
+    "keccak256": "npx tsc src/keccak256.ts --esModuleInterop true && node src/keccak256.js",
+    "contract": "npx tsc src/contract.ts --esModuleInterop true && node src/contract.js",
+    "setLockProxy": "npx tsc src/setLockProxy.ts --esModuleInterop true && node src/setLockProxy.js",
     "a": "npx tsc src/a.ts --esModuleInterop true && node src/a.js",
     "p2e": "npx tsc src/tmpnetToRopsten.ts --esModuleInterop true && node src/tmpnetToRopsten.js",
     "e2p": "npx tsc src/ropstenToTmpnet.ts --esModuleInterop true && node src/ropstenToTmpnet.js"

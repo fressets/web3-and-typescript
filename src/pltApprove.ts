@@ -1,6 +1,49 @@
 import Common from "@ethereumjs/common";
+import { Chain } from "@ethereumjs/common";
 import { Transaction } from "@ethereumjs/tx";
 
+const e2p = {
+    network_endpoint: "https://rpc.sepolia.org/",
+    wrapper_contract_address: "0xbA6F835ECAE18f5Fc5eBc074e5A0B94422a13126",
+    token_contract_address: "0xd17EC21111526E888585da6fC7c6c1f3D6cEF593",
+    from_address: "0xA0b06BF06b3Df01E5a18ED72e35c5d4A898E2B3f",
+    from_address_priv_key: "1488f96696b9cd278ce3998ed94228895bd7f2ce0b2ae4e4b1e8558cab63ca2c",
+    to_address: "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4",
+    approve_amount_eth: "0.01",
+    BCS_Palette2_polychainId: 1002,
+    Sepolia_chainId: 11155111,
+}
+
+const p2e = {
+    network_endpoint: "http://100.20.221.48:22000",
+    wrapper_contract_address: "0xdF539255E823b9D08aAD0b7D7b89868246f65B5a",
+    token_contract_address: "0x0000000000000000000000000000000000000103",
+    from_address: "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4",
+    from_address_priv_key: "",
+    to_address: "0xA0b06BF06b3Df01E5a18ED72e35c5d4A898E2B3f",
+    approve_amount_eth: "2.01",
+    BCS_Palette2_chainId: 200,
+    Sepolia_polychainId: 602,
+}
+
+const WRAPPER_CONTRACT_ADDR = e2p.wrapper_contract_address
+const nativeContractAddress = e2p.token_contract_address
+const fromAccount = e2p.from_address
+const PRIVATE_KEY = Buffer.from(e2p.from_address_priv_key, "hex")
+// const common = new Common({
+//     "chain": {
+//         "name": "quorum",
+//         "chainId": e2p.Sepolia_chainId,
+//         "networkId": e2p.Sepolia_chainId,
+//         "comment": "quorum private chain",
+//         "url": "http://127.0.0.1/",
+//         "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+//         "hardforks": [],
+//         "bootstrapNodes": []
+//     }
+// })
+
+const common = new Common({ chain: Chain.Sepolia })
 
 // 自分のメタマスクアドレスからprc20tokenコントラクトへトランザクションを送信
 // nativeContract.methods.approve(WRAPPER_CONTRACT_ADDR, approve_amount).encodeABI()を本データとして送信する
@@ -8,9 +51,9 @@ import { Transaction } from "@ethereumjs/tx";
 async function main() {
     const quorumjs = require("quorum-js");
     const Web3 = require("web3");
-    const web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"))
+    const web3 = new Web3(new Web3.providers.HttpProvider(e2p.network_endpoint))
     quorumjs.extend(web3)
-    const WRAPPER_CONTRACT_ADDR = "0xdF539255E823b9D08aAD0b7D7b89868246f65B5a" // https://github.com/polynetwork/docs/blob/master/config/README_TestNet.md#BCS-Palette-2
+    const approve_amount = web3.utils.toWei(e2p.approve_amount_eth, 'ether')
     const NATIVE_ABI = [
         { "type": "function", "constant": true, "name": "transferOwnership", "inputs": [{ "name": "newOwner", "type": "address" }], "outputs": [{ "name": "succeed", "type": "bool" }] },
         { "type": "function", "constant": true, "name": "ownership", "inputs": [], "outputs": [{ "name": "owner", "type": "address" }] },
@@ -41,34 +84,27 @@ async function main() {
         { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "fromAssetHash", "type": "address" }, { "indexed": false, "internalType": "address", "name": "fromAddress", "type": "address" }, { "indexed": false, "internalType": "uint64", "name": "toChainId", "type": "uint64" }, { "indexed": false, "internalType": "bytes", "name": "toAssetHash", "type": "bytes" }, { "indexed": false, "internalType": "bytes", "name": "toAddress", "type": "bytes" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "lock", "type": "event" },
         { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "toAssetHash", "type": "address" }, { "indexed": false, "internalType": "address", "name": "toAddress", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "unlock", "type": "event" }
     ] // どこを参照すればよいか不明
-    const nativeContractAddress = "0x0000000000000000000000000000000000000103" // OK
     const nativeContract = new web3.eth.Contract(NATIVE_ABI, nativeContractAddress)
-    const fromAccount = "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4" // 自分のメタマスク
-    const approve_amount = web3.utils.toWei('2.01', 'ether')
     let approveCode = await nativeContract.methods.approve(WRAPPER_CONTRACT_ADDR, approve_amount).encodeABI()
     let nonce;
-    const PRIVATE_KEY = Buffer.from("f22585c397340c73a05253897bc442d966e394ad77c3e085c2efdcf67186f11d", "hex") // 自分のメタマスク
+    const gasLimit = await web3.eth.estimateGas({
+        from: fromAccount,
+        to: nativeContractAddress,
+        data: approveCode
+      });
+    const gasPrice = parseInt(await web3.eth.getGasPrice());
+    console.log(gasLimit);
+    console.log(gasPrice);
+
     web3.eth.getTransactionCount(fromAccount).then((_nonce: string | number) => {
         nonce = _nonce.toString(16);
         console.log("Nonce: " + _nonce);
-        const common = new Common({
-            "chain": {
-                "name": "quorum",
-                "chainId": 200, // BCS-Palette-2
-                "networkId": 200, // BCS-Palette-2
-                "comment": "quorum private chain",
-                "url": "http://127.0.0.1/",
-                "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "hardforks": [],
-                "bootstrapNodes": []
-            }
-        })
         const txParams = {
             nonce: _nonce as number,
-            gasPrice: 0, // 0がmust
-            gasLimit: 0,
+            gasPrice,
+            gasLimit,
             from: fromAccount,
-            value: 0, // PLTはchain通貨がないので0
+            value: 0,
             to: nativeContractAddress,
             data: approveCode
         };

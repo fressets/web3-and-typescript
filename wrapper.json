@@ -1,0 +1,19 @@
+
+> account
+> npx tsc src/account.ts --esModuleInterop true && node src/account.js
+
+892078232116189
+n: 1
+Nonce: 1
+{
+    "blockNumber": 1974350,
+    "transactionHash": "0xa77e149d3c921c33f07c058bf55d178741053bd69ba69c507d445b010444aece",
+    "transactionIndex": 3,
+    "address": "0x0000000000000000000000000000000000000103",
+    "eventSig": "0x5c52a5f2b86fd16be577188b5a83ef1165faddc00b137b10285f16162e17792a",
+    "source": "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4",
+    "destination": "0xdf539255e823b9d08aad0b7d7b89868246f65b5a",
+    "amount": "2010000000000000000",
+    "logIndex": 0,
+    "removed": false
+}

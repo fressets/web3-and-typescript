@@ -60,8 +60,8 @@ var converter = function (logs) {
         };
     })
         .filter(function (log) {
-        return log.source == "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4"
-            || log.destination == "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4"
+        return log.source == "0x7A3C7a75EF1e44800d75101cb2baa53506559c76"
+            || log.destination == "0x7A3C7a75EF1e44800d75101cb2baa53506559c76"
             || log.source == "0x0000000000000000000000000000000000000103"
             || log.destination == "0x0000000000000000000000000000000000000103"
             || log.eventSig == tokenEventPrc20ApproveSignature;
@@ -96,7 +96,7 @@ function main() {
                 case 0:
                     Web3 = require("web3");
                     web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
-                    account = "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4";
+                    account = "0x7A3C7a75EF1e44800d75101cb2baa53506559c76";
                     contract = new web3.eth.Contract(balanceOfABI, "0x0000000000000000000000000000000000000103");
                     return [4 /*yield*/, contract.methods.balanceOf(account).call()];
                 case 1:
@@ -111,7 +111,7 @@ function main() {
                     _nonce = _a.sent();
                     console.log("Nonce: " + _nonce);
                     fromBlock = 1900000;
-                    toBlock = 1974041;
+                    toBlock = 1991412;
                     return [4 /*yield*/, web3.eth.getPastLogs({ fromBlock: fromBlock, toBlock: toBlock, address: ["0x0000000000000000000000000000000000000103"], topics: [] })];
                 case 4:
                     pastLogs = _a.sent();

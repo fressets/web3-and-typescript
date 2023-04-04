@@ -36,16 +36,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var quorumjs, Web3, web3, amount, fee;
+        var quorumjs, Web3, web3, amount, fee, CrossChainAdmin, a;
         return __generator(this, function (_a) {
-            quorumjs = require("quorum-js");
-            Web3 = require("web3");
-            web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
-            quorumjs.extend(web3);
-            amount = web3.utils.toWei('0.0002', 'ether');
-            fee = web3.utils.toWei('0.00001', 'ether');
-            console.log(amount - fee);
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    quorumjs = require("quorum-js");
+                    Web3 = require("web3");
+                    web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
+                    quorumjs.extend(web3);
+                    amount = web3.utils.toWei('0.0002', 'ether');
+                    fee = web3.utils.toWei('0.00001', 'ether');
+                    CrossChainAdmin = "0x0000000000000000000000000000000000000102";
+                    return [4 /*yield*/, web3.eth.getTransactionCount(CrossChainAdmin)];
+                case 1:
+                    a = _a.sent();
+                    console.log(amount - fee);
+                    console.log(a);
+                    return [2 /*return*/];
+            }
         });
     });
 }

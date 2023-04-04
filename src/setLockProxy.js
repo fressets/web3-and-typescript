@@ -40,36 +40,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var common_1 = __importDefault(require("@ethereumjs/common"));
-var common_2 = require("@ethereumjs/common");
 var tx_1 = require("@ethereumjs/tx");
-var e2p = {
-    network_endpoint: "https://rpc.sepolia.org/",
-    wrapper_contract_address: "0xbA6F835ECAE18f5Fc5eBc074e5A0B94422a13126",
-    token_contract_address: "0xd17EC21111526E888585da6fC7c6c1f3D6cEF593",
-    from_address: "0xA0b06BF06b3Df01E5a18ED72e35c5d4A898E2B3f",
-    from_address_priv_key: "1488f96696b9cd278ce3998ed94228895bd7f2ce0b2ae4e4b1e8558cab63ca2c",
-    to_address: "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4",
-    approve_amount_eth: "0.01",
-    lock_proxy: "0x95a10b809c9Cfd51A46652C785ac73d7269834b9",
-    BCS_Palette2_polychainId: 1002,
-    Sepolia_chainId: 11155111
-};
-// 自分のメタマスクアドレスからラッパーコントラクトへトランザクションを送信
-// なんのラッパーなのか不明。（polynetworkのブリッジ機能を持つもの）
-// wrapperContract.methods.lock("0x0000000000000000000000000000000000000103", chainId, toAddress, amount, fee, 0).encodeABI()を
-// 本データとして送信することで、WRAPPER_CONTRACT_ADDRが自分のメタマスクアドレスからamount分引き出しロックする。
-// その結果として、amountに対応するsepoliaETHがtoAddressへ送られる
+var quorumjs = require("quorum-js");
+var adminPrivKey = "68658531f5d44015be8d9404b8963f301e4ab064443ecb62e76e9132f1bec531";
+var ccmPrivKey = "d1b5a4bd4e1f2589b2cbf878105e1f7ad5d4ed0e41708f9b854e9812f68b4246";
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var quorumjs, Web3, web3, WRAPPER_CONTRACT_ADDR, WRAPPER_ABI, fromAccount, wrapperContract, chainId, toAddress, amount, lockCode, nonce, PRIVATE_KEY, gasLimit, gasPrice, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var Web3, web3, WRAPPER_CONTRACT_ADDR, WRAPPER_ABI, wrapperContract, lockProxy, code, nonce, PRIVATE_KEY, CrossChainAdmin, admin, _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    quorumjs = require("quorum-js");
                     Web3 = require("web3");
-                    web3 = new Web3(new Web3.providers.HttpProvider(e2p.network_endpoint));
+                    web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"));
                     quorumjs.extend(web3);
-                    WRAPPER_CONTRACT_ADDR = e2p.wrapper_contract_address;
+                    WRAPPER_CONTRACT_ADDR = "0x7A3C7a75EF1e44800d75101cb2baa53506559c76";
                     WRAPPER_ABI = [
                         {
                             "inputs": [
@@ -229,6 +213,21 @@ function main() {
                             "type": "function"
                         },
                         {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "token",
+                                    "type": "address"
+                                }
+                            ],
+                            "name": "extractFee",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
                             "constant": true,
                             "inputs": [],
                             "name": "feeCollector",
@@ -256,138 +255,6 @@ function main() {
                             ],
                             "payable": false,
                             "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "lockProxy",
-                            "outputs": [
-                                {
-                                    "internalType": "contract ILockProxy",
-                                    "name": "",
-                                    "type": "address"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "owner",
-                            "outputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "",
-                                    "type": "address"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "paused",
-                            "outputs": [
-                                {
-                                    "internalType": "bool",
-                                    "name": "",
-                                    "type": "bool"
-                                }
-                            ],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "renounceOwnership",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "newOwner",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "transferOwnership",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "collector",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "setFeeCollector",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "_lockProxy",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "setLockProxy",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "pause",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [],
-                            "name": "unpause",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [
-                                {
-                                    "internalType": "address",
-                                    "name": "token",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "extractFee",
-                            "outputs": [],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
                             "type": "function"
                         },
                         {
@@ -431,6 +298,99 @@ function main() {
                             "type": "function"
                         },
                         {
+                            "constant": true,
+                            "inputs": [],
+                            "name": "lockProxy",
+                            "outputs": [
+                                {
+                                    "internalType": "contract ILockProxy",
+                                    "name": "",
+                                    "type": "address"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "view",
+                            "type": "function"
+                        },
+                        {
+                            "constant": true,
+                            "inputs": [],
+                            "name": "owner",
+                            "outputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "",
+                                    "type": "address"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "view",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [],
+                            "name": "pause",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": true,
+                            "inputs": [],
+                            "name": "paused",
+                            "outputs": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "",
+                                    "type": "bool"
+                                }
+                            ],
+                            "payable": false,
+                            "stateMutability": "view",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [],
+                            "name": "renounceOwnership",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "collector",
+                                    "type": "address"
+                                }
+                            ],
+                            "name": "setFeeCollector",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "_lockProxy",
+                                    "type": "address"
+                                }
+                            ],
+                            "name": "setLockProxy",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
                             "constant": false,
                             "inputs": [
                                 {
@@ -454,56 +414,66 @@ function main() {
                             "payable": true,
                             "stateMutability": "payable",
                             "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "newOwner",
+                                    "type": "address"
+                                }
+                            ],
+                            "name": "transferOwnership",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        },
+                        {
+                            "constant": false,
+                            "inputs": [],
+                            "name": "unpause",
+                            "outputs": [],
+                            "payable": false,
+                            "stateMutability": "nonpayable",
+                            "type": "function"
                         }
-                    ] // どこを参照すればよいか不明
-                    ;
-                    fromAccount = e2p.from_address;
+                    ];
                     wrapperContract = new web3.eth.Contract(WRAPPER_ABI, WRAPPER_CONTRACT_ADDR);
-                    chainId = e2p.BCS_Palette2_polychainId;
-                    toAddress = e2p.to_address;
-                    amount = web3.utils.toWei('0.0001', 'ether');
-                    return [4 /*yield*/, wrapperContract.methods.lock(e2p.token_contract_address, chainId, toAddress, amount, 0, 0).encodeABI()];
+                    lockProxy = "0x0000000000000000000000000000000000000103";
+                    return [4 /*yield*/, wrapperContract.methods.setLockProxy(lockProxy).encodeABI()];
                 case 1:
-                    lockCode = _b.sent();
-                    console.log('lockCode=' + lockCode);
-                    PRIVATE_KEY = Buffer.from(e2p.from_address_priv_key, "hex") // 自分のメタマスク
-                    ;
-                    return [4 /*yield*/, web3.eth.estimateGas({
-                            from: fromAccount,
-                            to: WRAPPER_CONTRACT_ADDR,
-                            data: lockCode
-                        })];
+                    code = _c.sent();
+                    PRIVATE_KEY = Buffer.from(adminPrivKey, "hex");
+                    CrossChainAdmin = "0x0000000000000000000000000000000000000102";
+                    admin = "0xb936b5CDa162dd6d330E2475dd119e0257c855Ec";
+                    _b = (_a = console).log;
+                    return [4 /*yield*/, wrapperContract.methods.owner().call()];
                 case 2:
-                    gasLimit = _b.sent();
-                    _a = parseInt;
-                    return [4 /*yield*/, web3.eth.getGasPrice()];
-                case 3:
-                    gasPrice = _a.apply(void 0, [_b.sent()]);
-                    console.log(gasLimit);
-                    console.log(gasPrice);
-                    web3.eth.getTransactionCount(fromAccount).then(function (_nonce) {
+                    _b.apply(_a, [_c.sent()]);
+                    web3.eth.getTransactionCount(admin).then(function (_nonce) {
                         nonce = _nonce.toString(16);
                         console.log("Nonce: " + _nonce);
-                        // const common = new Common({
-                        //     "chain": {
-                        //         "name": "quorum",
-                        //         "chainId": 200,
-                        //         "networkId": 200,
-                        //         "comment": "quorum private chain",
-                        //         "url": "http://127.0.0.1/",
-                        //         "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                        //         "hardforks": [],
-                        //         "bootstrapNodes": []
-                        //     }
-                        // })
-                        var common = new common_1["default"]({ chain: common_2.Chain.Sepolia });
+                        var common = new common_1["default"]({
+                            "chain": {
+                                "name": "quorum",
+                                "chainId": 200,
+                                "networkId": 200,
+                                "comment": "quorum private chain",
+                                "url": "http://127.0.0.1/",
+                                "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                                "hardforks": [],
+                                "bootstrapNodes": []
+                            }
+                        });
                         var txParams = {
                             nonce: _nonce,
-                            gasPrice: gasPrice,
-                            gasLimit: gasLimit,
+                            gasPrice: 0,
+                            gasLimit: 0,
                             value: 0,
                             to: WRAPPER_CONTRACT_ADDR,
-                            data: lockCode
+                            data: code
                         };
                         var tx = new tx_1.Transaction(txParams, { common: common }).sign(PRIVATE_KEY);
                         console.log("sign done.");

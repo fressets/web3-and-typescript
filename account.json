@@ -1,0 +1,31 @@
+
+> account
+> npx tsc src/account.ts --esModuleInterop true && node src/account.js
+
+5000000000000000000
+n: 1
+Nonce: 1
+{
+    "blockNumber": 1974324,
+    "transactionHash": "0x2110ef82cd6466b0419e3c2555823153c42fec7c2b6f5941b369693131940792",
+    "transactionIndex": 2,
+    "address": "0x0000000000000000000000000000000000000103",
+    "eventSig": "0xbeabacc8ffedac16e9a60acdb2ca743d80c2ebb44977a93fa8e483c74d2b35a8",
+    "source": "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4",
+    "destination": "0xdf539255e823b9d08aad0b7d7b89868246f65b5a",
+    "amount": "5000000000000000000",
+    "logIndex": 0,
+    "removed": false
+}
+{
+    "blockNumber": 1974350,
+    "transactionHash": "0xa77e149d3c921c33f07c058bf55d178741053bd69ba69c507d445b010444aece",
+    "transactionIndex": 3,
+    "address": "0x0000000000000000000000000000000000000103",
+    "eventSig": "0x5c52a5f2b86fd16be577188b5a83ef1165faddc00b137b10285f16162e17792a",
+    "source": "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4",
+    "destination": "0xdf539255e823b9d08aad0b7d7b89868246f65b5a",
+    "amount": "2010000000000000000",
+    "logIndex": 0,
+    "removed": false
+}

@@ -9,4 +9,4 @@ async function getReason(txHash: any) {
     console.log(JSON.stringify(res))
 }
 
-getReason("0x581180a0f5b9adfb065d45daa5e5c8621cd288a056064a19e341473e0dd29c2f")
+getReason("0x176145e41ef855196038af36a7ca7c168613c63dbf1b31a163b0bad44c93ecdc")

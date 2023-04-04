@@ -25,8 +25,8 @@ const converter = (logs: any[]) => {
             };
         })
         .filter((log) => 
-        log.source =="0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4"
-        || log.destination == "0xcd985714a3a3c764dfe2c14f5b8a2480de3f3bb4"
+        log.source =="0x7A3C7a75EF1e44800d75101cb2baa53506559c76"
+        || log.destination == "0x7A3C7a75EF1e44800d75101cb2baa53506559c76"
         || log.source == "0x0000000000000000000000000000000000000103"
         || log.destination == "0x0000000000000000000000000000000000000103"
         || log.eventSig == tokenEventPrc20ApproveSignature
@@ -58,7 +58,7 @@ const balanceOfABI = [
 async function main() {
     const Web3 = require("web3");
     const web3 = new Web3(new Web3.providers.HttpProvider("http://100.20.221.48:22000"))
-    const account = "0xCD985714a3A3c764dFE2c14f5B8a2480De3F3Bb4"
+    const account = "0x7A3C7a75EF1e44800d75101cb2baa53506559c76"
     const contract = new web3.eth.Contract(balanceOfABI, "0x0000000000000000000000000000000000000103")
     let result = await contract.methods.balanceOf(account).call();
     console.log(result);
@@ -69,7 +69,7 @@ async function main() {
     console.log("Nonce: " + _nonce);
 
     const fromBlock = 1900000;
-    const toBlock = 1974041;
+    const toBlock = 1991412;
     const pastLogs = await web3.eth.getPastLogs({ fromBlock, toBlock, address: ["0x0000000000000000000000000000000000000103"], topics: [] });
     converter(pastLogs).forEach(row => {
         console.log(JSON.stringify(row));

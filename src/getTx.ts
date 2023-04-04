@@ -9,8 +9,10 @@ async function main() {
     // web3.eth.getTransaction("0x4d9c3d0fd1a2e5897754352ec446c284045faa558b366e7992bfa617406766f3").then(console.log)
     // web3.eth.getTransaction("0x962945260a0a293b9c8dab23d17a0ea95a7f691fdf56133fcea27e1cf54b7ca7").then(console.log)
 
-    web3.eth.getTransactionReceipt("0x4d9c3d0fd1a2e5897754352ec446c284045faa558b366e7992bfa617406766f3").then(console.log)
-    web3.eth.getTransactionReceipt("0x962945260a0a293b9c8dab23d17a0ea95a7f691fdf56133fcea27e1cf54b7ca7").then(console.log)
+    const res = await web3.eth.getTransactionReceipt("0x41b982f1e01abe6d1da8ff717a55a64f47a19b2102215758f5c3fc95b92511fd")
+    // web3.eth.getTransactionReceipt("0x962945260a0a293b9c8dab23d17a0ea95a7f691fdf56133fcea27e1cf54b7ca7").then(console.log)
+
+    console.log(JSON.stringify(res))
 }
 
 main()
